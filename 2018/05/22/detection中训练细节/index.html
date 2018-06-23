@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="deeplearning, detection," />
 
 
 
@@ -80,13 +80,14 @@
 
 
 <meta name="description" content="这段时间一直在做检测/分割相关方面的工作，之前参加了Kaggle上的Nuclei detection比赛，从别人的代码中学到很多东西。为了能够更进一步了解detection 中的细节，决定在Heng Cherkeng代码的基础上复现一下faster/mask rcnn上的结果，这里记录一下复现过程中发现的两者实现的不同之处，以及复现的过程中才了解到的模型训练中的一些细节。 RPN 网络训练：  给">
+<meta name="keywords" content="deeplearning, detection">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Faster&#x2F;Mask R-CNN 复现心得和Nuclei detection中训练细节">
 <meta property="og:url" content="http://yoursite.com/2018/05/22/detection中训练细节/index.html">
 <meta property="og:site_name" content="linCurry&#39; Blog">
 <meta property="og:description" content="这段时间一直在做检测/分割相关方面的工作，之前参加了Kaggle上的Nuclei detection比赛，从别人的代码中学到很多东西。为了能够更进一步了解detection 中的细节，决定在Heng Cherkeng代码的基础上复现一下faster/mask rcnn上的结果，这里记录一下复现过程中发现的两者实现的不同之处，以及复现的过程中才了解到的模型训练中的一些细节。 RPN 网络训练：  给">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-22T07:02:44.000Z">
+<meta property="og:updated_time" content="2018-06-23T08:16:56.119Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Faster&#x2F;Mask R-CNN 复现心得和Nuclei detection中训练细节">
 <meta name="twitter:description" content="这段时间一直在做检测/分割相关方面的工作，之前参加了Kaggle上的Nuclei detection比赛，从别人的代码中学到很多东西。为了能够更进一步了解detection 中的细节，决定在Heng Cherkeng代码的基础上复现一下faster/mask rcnn上的结果，这里记录一下复现过程中发现的两者实现的不同之处，以及复现的过程中才了解到的模型训练中的一些细节。 RPN 网络训练：  给">
@@ -272,6 +273,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deeplearning-detection/" itemprop="url" rel="index">
+                    <span itemprop="name">deeplearning, detection</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -338,6 +361,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/deeplearning-detection/" rel="tag"># deeplearning, detection</a>
+          
+        </div>
       
 
       
@@ -438,13 +467,22 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
             
               
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
