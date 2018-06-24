@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="machine learning,基础知识," />
 
 
 
@@ -79,14 +79,18 @@
 
 
 
+<meta name="description" content="矩阵微分法和常用符号标记规范​    之前的心态一直都很急，只想着做能够快速见到成果的事，很多知识掌握得模棱两可就放过去了，也尝到了很多苦头，需要不停得返回去看。于是痛定思痛，下定决心用博客记录下自己学习的过程，认真的对待自己学过的东西。之前一直感觉全连接网络和卷积网络的BP自己是大概清楚的，但是如果要写出来，就发现不知如何下笔，重新看了别人写的推导又发现自己对矩阵求导的一些符号标记不是特别清楚。">
+<meta name="keywords" content="machine learning,基础知识">
 <meta property="og:type" content="article">
-<meta property="og:title" content="矩阵微分和常用符号规范_2">
+<meta property="og:title" content="矩阵微分和常用符号规范">
 <meta property="og:url" content="http://yoursite.com/2018/06/23/矩阵微分和常用符号规范/index.html">
 <meta property="og:site_name" content="linCurry&#39; Blog">
+<meta property="og:description" content="矩阵微分法和常用符号标记规范​    之前的心态一直都很急，只想着做能够快速见到成果的事，很多知识掌握得模棱两可就放过去了，也尝到了很多苦头，需要不停得返回去看。于是痛定思痛，下定决心用博客记录下自己学习的过程，认真的对待自己学过的东西。之前一直感觉全连接网络和卷积网络的BP自己是大概清楚的，但是如果要写出来，就发现不知如何下笔，重新看了别人写的推导又发现自己对矩阵求导的一些符号标记不是特别清楚。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-23T13:57:34.237Z">
+<meta property="og:updated_time" content="2018-06-24T00:57:08.961Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="矩阵微分和常用符号规范_2">
+<meta name="twitter:title" content="矩阵微分和常用符号规范">
+<meta name="twitter:description" content="矩阵微分法和常用符号标记规范​    之前的心态一直都很急，只想着做能够快速见到成果的事，很多知识掌握得模棱两可就放过去了，也尝到了很多苦头，需要不停得返回去看。于是痛定思痛，下定决心用博客记录下自己学习的过程，认真的对待自己学过的东西。之前一直感觉全连接网络和卷积网络的BP自己是大概清楚的，但是如果要写出来，就发现不知如何下笔，重新看了别人写的推导又发现自己对矩阵求导的一些符号标记不是特别清楚。">
 
 
 
@@ -122,7 +126,7 @@
 
 
 
-  <title>矩阵微分和常用符号规范_2 | linCurry' Blog</title>
+  <title>矩阵微分和常用符号规范 | linCurry' Blog</title>
   
 
 
@@ -246,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">矩阵微分和常用符号规范_2</h1>
+          <h1 class="post-title" itemprop="name headline">矩阵微分和常用符号规范</h1>
         
 
         <div class="post-meta">
@@ -268,6 +272,39 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">machine learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/machine-learning/基础知识/" itemprop="url" rel="index">
+                    <span itemprop="name">基础知识</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -306,7 +343,27 @@
       
 
       
-        
+        <h2 id="矩阵微分法和常用符号标记规范"><a href="#矩阵微分法和常用符号标记规范" class="headerlink" title="矩阵微分法和常用符号标记规范"></a>矩阵微分法和常用符号标记规范</h2><p>​    之前的心态一直都很急，只想着做能够快速见到成果的事，很多知识掌握得模棱两可就放过去了，也尝到了很多苦头，需要不停得返回去看。于是痛定思痛，下定决心用博客记录下自己学习的过程，认真的对待自己学过的东西。之前一直感觉全连接网络和卷积网络的BP自己是大概清楚的，但是如果要写出来，就发现不知如何下笔，重新看了别人写的推导又发现自己对矩阵求导的一些符号标记不是特别清楚。这里将矩阵微分法和自己之前不是很清楚的规范的符号标记记录一下。完整的规则可以查看<a href="&quot;https://atmos.washington.edu/~dennis/MatrixCalculus.pdf&quot;," title="&#39;Matirc Differentiation">Matrix Differentiation</a>。</p>
+<h3 id="1-常用符号和术语"><a href="#1-常用符号和术语" class="headerlink" title="1. 常用符号和术语"></a>1. 常用符号和术语</h3><ul>
+<li>在公式中，向量表示只有一列的矩阵，即向量通常表示为列向量</li>
+<li>包含多列的向量（矩阵）通常使用大写的<strong>粗体大写字母</strong>来表示${\bf A}, {\bf B}, {\bf X}$。而单列的矩阵（向量）通常使用粗体小写字母来表示。${\bf a}, {\bf b}, {\bf x}$并且约定俗称的是，通常使从字母表靠前顺序的字母来作为已知的矩阵，而使用字母表靠后顺序的字母作为未知的或者是变量矩阵。</li>
+<li>矩阵的行列式可以使用${\mid \bf A \mid }$或者${det(\bf A)}$去表达， 矩阵的秩表示为($rank(\bf A)$。</li>
+</ul>
+<h3 id="2-矩阵微分法"><a href="#2-矩阵微分法" class="headerlink" title="2. 矩阵微分法"></a>2. 矩阵微分法</h3><p>在矩阵求导中通常采用分子布局来显示求导结果，即对于向量${\bf y} = \begin {bmatrix} y_1 \ y_2\ \vdots \ y_n\end{bmatrix} $，关于x的求导在分子布局下的表现形式为$\frac {\partial \bf y}{\partial x} = \begin {bmatrix} \frac{\partial y_1}{\partial x} \ \frac{\partial y_2}{\partial x} \ \vdots \ \frac{\partial y_n}{\partial x} \end{bmatrix}\tag{1}$</p>
+<p>而在分母布局下为$\frac {\partial \bf y}{\partial x} = \begin {bmatrix} \frac{\partial y_1}{\partial x} &amp; \frac{\partial y_2}{\partial x} &amp; \cdots &amp; \frac{\partial y_n}{\partial x} \end{bmatrix}\tag{2}$</p>
+<h4 id="2-1-关于标量的导数"><a href="#2-1-关于标量的导数" class="headerlink" title="2.1 关于标量的导数"></a>2.1 关于标量的导数</h4><h4 id="2-2-关于向量的导数"><a href="#2-2-关于向量的导数" class="headerlink" title="2.2 关于向量的导数"></a>2.2 关于向量的导数</h4><h5 id="2-2-1-标量关于向量的导数"><a href="#2-2-1-标量关于向量的导数" class="headerlink" title="2.2.1 标量关于向量的导数"></a>2.2.1 标量关于向量的导数</h5><p>标量 $y$ 关于向量 ${\bf x} = \begin {bmatrix} x_1 \ x_2 \ \vdots \ x_n \end{bmatrix}$ 的求导可以表示为$\frac {\partial y} {\partial \bf x} = \begin{bmatrix}  \frac {\partial y} {\partial x_1} \frac {\partial y} {\partial x_2} \cdots \frac {\partial y} {\partial x_n} \end{bmatrix}\tag{3}$</p>
+<p>此时该向量称为梯度向量。</p>
+<h5 id="2-2-2-向量关于向量的导数"><a href="#2-2-2-向量关于向量的导数" class="headerlink" title="2.2.2 向量关于向量的导数"></a>2.2.2 向量关于向量的导数</h5><p>向量 ${\bf y} = \begin{bmatrix}  y_1 \ y_2 \ \vdots \ y_n \end{bmatrix}$ 关于 向量 ${\bf x} = \begin{bmatrix} x_1 \ x_2 \ \vdots \ x_n \end{bmatrix}$ 的导数可以可以看作n个标量对于向量求导，求导结果为$$\frac {\partial \bf y}{\partial \bf x} = \begin {bmatrix} \frac{\partial y_{1} }{\partial x_{1} } &amp; \frac{\partial   y_{1} }{\partial x_{2}  }&amp; \cdots &amp; \frac{\partial y_{1}  }{\partial x_{n} }  \  \frac{\partial  y_{2}}{\partial x_{1}  } &amp; \frac{\partial y_{2}}{\partial x_{2} }   &amp; \cdots &amp;  \frac{\partial y_{2}}{\partial x_{n} }  \ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \  \frac{\partial y_{n} }{\partial x_{1}  } &amp;  \frac{\partial y_{n} }{\partial x_{2} } &amp; \cdots &amp;  \frac{\partial y_{n}}{\partial x_{n} }  \end{bmatrix}\tag{4}$$</p>
+<p>此时得到的矩阵叫<strong>Jacobian</strong>矩阵</p>
+<h4 id="2-3-常见的矩阵求导例子"><a href="#2-3-常见的矩阵求导例子" class="headerlink" title="2.3 常见的矩阵求导例子"></a>2.3 常见的矩阵求导例子</h4><ul>
+<li>$\bf y = \bf Ax$ , 其中 $\bf A$ 不依赖于 $\bf x$ ，有 $$ \frac {\partial \bf y } { \partial \bf x } = \bf A \tag{5}$$</li>
+<li>$\bf y = \bf Ax$ , 其中 $\bf A$ 不依赖于 $\bf x$ ，但 $\bf x $ 是关于 $\bf z$ 的函数，有 $$ \frac {\partial \bf y } { \partial \bf x } = \bf A \frac{\partial \bf x}{\partial \bf z}  \tag{6}$$</li>
+<li>$α = \bf y^{\top}Ax $, $\bf A$ 不依赖于 $\bf x$，有$$ \frac {\partial α}{ \partial \bf x} = \bf y^{\top}A \tag{7}$$  $$\frac {\partial α}{\partial \bf y} = \bf x^{\top}A^{\top} \tag{8}$$</li>
+</ul>
+<p>&lt;待补充&gt;</p>
+<h4 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h4><p><a href="https://atmos.washington.edu/~dennis/MatrixCalculus.pdf" target="_blank" rel="noopener">Matrix Differentiation</a></p>
+<p><a href="https://blog.csdn.net/u010976453/article/details/54381248" target="_blank" rel="noopener">机器学习中的线性代数之矩阵求导</a></p>
+
       
     </div>
     
@@ -320,6 +377,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+          
+            <a href="/tags/基础知识/" rel="tag"># 基础知识</a>
+          
+        </div>
       
 
       
@@ -370,7 +435,7 @@
   
     <div class="comments" id="comments">
       <div class="ds-thread" data-thread-key="2018/06/23/矩阵微分和常用符号规范/"
-           data-title="矩阵微分和常用符号规范_2" data-url="http://yoursite.com/2018/06/23/矩阵微分和常用符号规范/">
+           data-title="矩阵微分和常用符号规范" data-url="http://yoursite.com/2018/06/23/矩阵微分和常用符号规范/">
       </div>
     </div>
 
@@ -397,8 +462,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -424,7 +498,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -435,7 +509,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -458,6 +532,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵微分法和常用符号标记规范"><span class="nav-number">1.</span> <span class="nav-text">矩阵微分法和常用符号标记规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-常用符号和术语"><span class="nav-number">1.1.</span> <span class="nav-text">1. 常用符号和术语</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-矩阵微分法"><span class="nav-number">1.2.</span> <span class="nav-text">2. 矩阵微分法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-关于标量的导数"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 关于标量的导数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-关于向量的导数"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 关于向量的导数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-标量关于向量的导数"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">2.2.1 标量关于向量的导数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-2-向量关于向量的导数"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">2.2.2 向量关于向量的导数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-常见的矩阵求导例子"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 常见的矩阵求导例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考资料："><span class="nav-number">1.2.4.</span> <span class="nav-text">参考资料：</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
