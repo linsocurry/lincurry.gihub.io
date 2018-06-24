@@ -353,12 +353,12 @@
 <p>而在分母布局下为$\frac {\partial \bf y}{\partial x} = \begin {bmatrix} \frac{\partial y_1}{\partial x} &amp; \frac{\partial y_2}{\partial x} &amp; \cdots &amp; \frac{\partial y_n}{\partial x} \end{bmatrix}\tag{2}$</p>
 <h4 id="2-1-关于标量的导数"><a href="#2-1-关于标量的导数" class="headerlink" title="2.1 关于标量的导数"></a>2.1 关于标量的导数</h4><h4 id="2-2-关于向量的导数"><a href="#2-2-关于向量的导数" class="headerlink" title="2.2 关于向量的导数"></a>2.2 关于向量的导数</h4><h5 id="2-2-1-标量关于向量的导数"><a href="#2-2-1-标量关于向量的导数" class="headerlink" title="2.2.1 标量关于向量的导数"></a>2.2.1 标量关于向量的导数</h5><p>标量 $y$ 关于向量 ${\bf x} = \begin {bmatrix} x_1 \ x_2 \ \vdots \ x_n \end{bmatrix}$ 的求导可以表示为$\frac {\partial y} {\partial \bf x} = \begin{bmatrix}  \frac {\partial y} {\partial x_1} \frac {\partial y} {\partial x_2} \cdots \frac {\partial y} {\partial x_n} \end{bmatrix}\tag{3}$</p>
 <p>此时该向量称为梯度向量。</p>
-<h5 id="2-2-2-向量关于向量的导数"><a href="#2-2-2-向量关于向量的导数" class="headerlink" title="2.2.2 向量关于向量的导数"></a>2.2.2 向量关于向量的导数</h5><p>向量 ${\bf y} = \begin{bmatrix}  y_1 \ y_2 \ \vdots \ y_n \end{bmatrix}$ 关于 向量 ${\bf x} = \begin{bmatrix} x_1 \ x_2 \ \vdots \ x_n \end{bmatrix}$ 的导数可以可以看作n个标量对于向量求导，求导结果为$$\frac {\partial \bf y}{\partial \bf x} = \begin {bmatrix} \frac{\partial y_{1} }{\partial x_{1} } &amp; \frac{\partial   y_{1} }{\partial x_{2}  }&amp; \cdots &amp; \frac{\partial y_{1}  }{\partial x_{n} }  \  \frac{\partial  y_{2}}{\partial x_{1}  } &amp; \frac{\partial y_{2}}{\partial x_{2} }   &amp; \cdots &amp;  \frac{\partial y_{2}}{\partial x_{n} }  \ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \  \frac{\partial y_{n} }{\partial x_{1}  } &amp;  \frac{\partial y_{n} }{\partial x_{2} } &amp; \cdots &amp;  \frac{\partial y_{n}}{\partial x_{n} }  \end{bmatrix}\tag{4}$$</p>
+<h5 id="2-2-2-向量关于向量的导数"><a href="#2-2-2-向量关于向量的导数" class="headerlink" title="2.2.2 向量关于向量的导数"></a>2.2.2 向量关于向量的导数</h5><p>向量 ${\bf y} = \begin{bmatrix}  y<em>1 \ y_2 \ \vdots \ y_n \end{bmatrix}$ 关于 向量 ${\bf x} = \begin{bmatrix} x_1 \ x_2 \ \vdots \ x_n \end{bmatrix}$ 的导数可以可以看作n个标量对于向量求导，求导结果为$$\frac {\partial \bf y}{\partial \bf x} = \begin {bmatrix} \frac{\partial y</em>{1} }{\partial x<em>{1} } &amp; \frac{\partial   y</em>{1} }{\partial x<em>{2}  }&amp; \cdots &amp; \frac{\partial y</em>{1}  }{\partial x<em>{n} }  \  \frac{\partial  y</em>{2}}{\partial x<em>{1}  } &amp; \frac{\partial y</em>{2}}{\partial x<em>{2} }   &amp; \cdots &amp;  \frac{\partial y</em>{2}}{\partial x<em>{n} }  \ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \  \frac{\partial y</em>{n} }{\partial x<em>{1}  } &amp;  \frac{\partial y</em>{n} }{\partial x<em>{2} } &amp; \cdots &amp;  \frac{\partial y</em>{n}}{\partial x_{n} }  \end{bmatrix}\tag{4}$$</p>
 <p>此时得到的矩阵叫<strong>Jacobian</strong>矩阵</p>
 <h4 id="2-3-常见的矩阵求导例子"><a href="#2-3-常见的矩阵求导例子" class="headerlink" title="2.3 常见的矩阵求导例子"></a>2.3 常见的矩阵求导例子</h4><ul>
-<li>$\bf y = \bf Ax$ , 其中 $\bf A$ 不依赖于 $\bf x$ ，有 $$ \frac {\partial \bf y } { \partial \bf x } = \bf A \tag{5}$$</li>
-<li>$\bf y = \bf Ax$ , 其中 $\bf A$ 不依赖于 $\bf x$ ，但 $\bf x $ 是关于 $\bf z$ 的函数，有 $$ \frac {\partial \bf y } { \partial \bf x } = \bf A \frac{\partial \bf x}{\partial \bf z}  \tag{6}$$</li>
-<li>$α = \bf y^{\top}Ax $, $\bf A$ 不依赖于 $\bf x$，有$$ \frac {\partial α}{ \partial \bf x} = \bf y^{\top}A \tag{7}$$  $$\frac {\partial α}{\partial \bf y} = \bf x^{\top}A^{\top} \tag{8}$$</li>
+<li>$\bf y = \bf Ax$ , 其中 $\bf A$ 不依赖于 $\bf x$ ，有 <script type="math/tex">\frac {\partial \bf y } { \partial \bf x } = \bf A \tag{5}</script></li>
+<li>$\bf y = \bf Ax$ , 其中 $\bf A$ 不依赖于 $\bf x$ ，但 $\bf x $ 是关于 $\bf z$ 的函数，有 <script type="math/tex">\frac {\partial \bf y } { \partial \bf x } = \bf A \frac{\partial \bf x}{\partial \bf z}  \tag{6}</script></li>
+<li>$α = \bf y^{\top}Ax $, $\bf A$ 不依赖于 $\bf x$，有<script type="math/tex">\frac {\partial α}{ \partial \bf x} = \bf y^{\top}A \tag{7}</script>  <script type="math/tex">\frac {\partial α}{\partial \bf y} = \bf x^{\top}A^{\top} \tag{8}</script></li>
 </ul>
 <p>&lt;待补充&gt;</p>
 <h4 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h4><p><a href="https://atmos.washington.edu/~dennis/MatrixCalculus.pdf" target="_blank" rel="noopener">Matrix Differentiation</a></p>
@@ -1035,7 +1035,24 @@
         }
       });
     </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
   
 
 
