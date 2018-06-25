@@ -337,13 +337,13 @@
         
           
             <h2 id="DNN-反向传播推导"><a href="#DNN-反向传播推导" class="headerlink" title="DNN 反向传播推导"></a>DNN 反向传播推导</h2><p>​    反向传播是深度学习网络的参数更新的基础，基于梯度下降算法，用来更新权重$\bf w$和偏置$\bf b$，对于全连接网络的反向传播一般都可以大致了解其过程，但是要写出一个归纳式子发现自己并不能很快的写出来，这里记录一下推导的过程。</p>
-<p>​    为了简单起见，假设数据集中只有一个需要拟合的数据$(\bf x, y)，\bf x​$和$\bf y​$可以为任意维度, 并设计损失函数为最简便的均方误差损失，则对于网络任意一层$l​$层，输出为<script type="math/tex">{\bf a}^l = \sigma({\bf z}^l) = \sigma({\bf W}^l {\bf a}^{l-1}+{\bf b^l})\tag{1}​</script></p>
+<p>​    为了简单起见，假设数据集中只有一个需要拟合的数据$(\bf x, y)，\bf x$和$\bf y$可以为任意维度, 并设计损失函数为最简便的均方误差损失，则对于网络任意一层$l$层，输出为<script type="math/tex">{\bf a}^l = \sigma({\bf z}^l) = \sigma({\bf W}^l {\bf a}^{l-1}+{\bf b}^l)\tag{1}</script></p>
 <p>并且对于网络的最后一层<script type="math/tex">L</script>层，损失为(后面简写为$J$)<script type="math/tex">J({\bf W, b, x, y}) = \frac {1}{2}||{\bf a}^L - {\bf y}||_2^2\tag{2}</script></p>
-<p>记最终的损失$J$对于任意一层$l$层未经过激活函数前的输出的梯度为<script type="math/tex">\delta^l=\frac {\partial J}{\partial {\bf z}^l}\tag{3}</script></p>
-<p>可以发现，若能够求得每一层的$\delta^l$,则该层参数的梯度也很容易求得，因为<script type="math/tex">\frac {\partial J}{\partial {\bf W}^l}  = \frac {\partial J}{\partial {\bf z}^l} \frac {\partial {\bf z}^l}{\partial {\bf W}^l} = \delta^l  \frac {\partial {\bf z}^l}{\partial {\bf W}^l}\tag{4}</script></p>
+<p>记最终的损失$J$对于任意一层$l$层未经过激活函数前的输出的梯度为</p>
+<script type="math/tex; mode=display">\delta^l=\frac {\partial J}{\partial {\bf z}^l}\tag{3}</script><p>可以发现，若能够求得每一层的$\delta^l​$,则该层参数的梯度也很容易求得，因为<script type="math/tex">\frac {\partial J}{\partial {\bf W}^l}  = \frac {\partial J}{\partial {\bf z}^l} \frac {\partial {\bf z}^l}{\partial {\bf W}^l} = \delta^l  \frac {\partial {\bf z}^l}{\partial {\bf W}^l}\tag{4}​</script></p>
 <script type="math/tex; mode=display">\frac {\partial J}{\partial {\bf b}^l}  = \frac {\partial J}{\partial {\bf z}^l} \frac {\partial {\bf z}^l}{\partial {\bf b}^l} = \delta^l  \frac {\partial {\bf z}^l}{\partial {\bf b}^l}\tag{5}</script><p>则现在的问题就是求得每一层的$\delta^l$， 其满足以下式子<script type="math/tex">\delta^l = \frac {\partial J}{\partial {\bf z}^l} = \frac{\partial J}{\partial {\bf z^L}} \frac{\partial {\bf z^{L}}}{\partial {\bf z^{L-1}}} \cdots \frac {\partial {\bf z}^{l+1}}{\partial {\bf z}^{l}} = \frac{\partial J}{\partial {\bf z}^{l+1}}\frac{\partial {\bf z}^l+1}{\partial {\bf z}^l} =  \delta^{l+1}\frac{\partial {\bf z}^l+1}{\partial {\bf z}^l}\tag{6}</script></p>
 <p>易求得最后一层的$\delta^L$为<script type="math/tex">\delta^L =\frac {\partial J}{\partial {\bf z}^L} = ({\bf a}^L-{\bf y})\sigma^{'}({\bf z}^L) \tag{7}</script> </p>
-<p>使用数学归纳法: 假设已知$\delta^{l+1}$, 此时要求$\delta^L$只需知道$\frac{\partial {\bf z}^l+1}{\partial {\bf z}^l}$即可，知$\delta^{l+1}$和$\delta^{l}$ 满足以下关系式子 <script type="math/tex">{\bf z}^{l+1} = {\bf W}^{l+1} {\sigma ({\bf z}^l)}+{\bf b^{l+1}} \tag{8}</script> </p>
+<p>使用数学归纳法: 假设已知$\delta^{l+1}$, 此时要求$\delta^L$只需知道$\frac{\partial {\bf z}^l+1}{\partial {\bf z}^l}$即可，知$\delta^{l+1}$和$\delta^{l}$ 满足以下关系式子 <script type="math/tex">{\bf z}^{l+1} = {\bf W}^{l+1} {\sigma ({\bf z}^l)}+{\bf b}^{l+1} \tag{8}</script> </p>
 <p>可求得</p>
 <script type="math/tex; mode=display">\frac{\partial {\bf z}^{l+1}}{\partial {\bf z}^l} = {\bf W}^{l+1} \odot (\underbrace{(\sigma^{'}({\bf z}^l),..,\sigma^{'}({\bf z}^l))}_{n_{l+1}} )^{\top}\tag{9}</script><p>而$\delta^L$已知，这样就得到了每一层$\delta^l$的递推关系式子，再根据$(4), (5)$式即可求得每层参数的梯度。</p>
 
