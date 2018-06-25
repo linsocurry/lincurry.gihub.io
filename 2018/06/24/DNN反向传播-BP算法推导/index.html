@@ -72,7 +72,7 @@
 
 
 
-  <meta name="keywords" content="deeplearning,detection," />
+  <meta name="keywords" content="deep learning," />
 
 
 
@@ -83,18 +83,18 @@
 
 
 
-<meta name="description" content="这段时间一直在做检测/分割相关方面的工作，之前参加了Kaggle上的Nuclei detection比赛，从别人的代码中学到很多东西。为了能够更进一步了解detection 中的细节，决定在Heng Cherkeng代码的基础上复现一下faster/mask rcnn上的结果，这里记录一下复现过程中发现的两者实现的不同之处，以及复现的过程中才了解到的模型训练中的一些细节。 RPN 网络训练：  给">
-<meta name="keywords" content="deeplearning,detection">
+<meta name="description" content="&amp;lt;待补充&amp;gt;">
+<meta name="keywords" content="deep learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Faster&#x2F;Mask R-CNN 复现心得和Nuclei detection中训练细节">
-<meta property="og:url" content="http://yoursite.com/2018/05/22/detection中训练细节/index.html">
+<meta property="og:title" content="DNN反向传播 BP算法推导">
+<meta property="og:url" content="http://yoursite.com/2018/06/24/DNN反向传播-BP算法推导/index.html">
 <meta property="og:site_name" content="linCurry&#39; Blog">
-<meta property="og:description" content="这段时间一直在做检测/分割相关方面的工作，之前参加了Kaggle上的Nuclei detection比赛，从别人的代码中学到很多东西。为了能够更进一步了解detection 中的细节，决定在Heng Cherkeng代码的基础上复现一下faster/mask rcnn上的结果，这里记录一下复现过程中发现的两者实现的不同之处，以及复现的过程中才了解到的模型训练中的一些细节。 RPN 网络训练：  给">
+<meta property="og:description" content="&amp;lt;待补充&amp;gt;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-23T13:52:49.755Z">
+<meta property="og:updated_time" content="2018-06-25T03:04:08.698Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Faster&#x2F;Mask R-CNN 复现心得和Nuclei detection中训练细节">
-<meta name="twitter:description" content="这段时间一直在做检测/分割相关方面的工作，之前参加了Kaggle上的Nuclei detection比赛，从别人的代码中学到很多东西。为了能够更进一步了解detection 中的细节，决定在Heng Cherkeng代码的基础上复现一下faster/mask rcnn上的结果，这里记录一下复现过程中发现的两者实现的不同之处，以及复现的过程中才了解到的模型训练中的一些细节。 RPN 网络训练：  给">
+<meta name="twitter:title" content="DNN反向传播 BP算法推导">
+<meta name="twitter:description" content="&amp;lt;待补充&amp;gt;">
 
 
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/22/detection中训练细节/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/06/24/DNN反向传播-BP算法推导/"/>
 
 
 
 
 
-  <title>Faster/Mask R-CNN 复现心得和Nuclei detection中训练细节 | linCurry' Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>DNN反向传播 BP算法推导 | linCurry' Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -237,7 +237,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/22/detection中训练细节/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/24/DNN反向传播-BP算法推导/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="dwLin">
@@ -254,7 +254,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Faster/Mask R-CNN 复现心得和Nuclei detection中训练细节</h1>
+          <h1 class="post-title" itemprop="name headline">DNN反向传播 BP算法推导</h1>
         
 
         <div class="post-meta">
@@ -266,8 +266,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-22T14:58:43+08:00">
-                2018-05-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-24T10:41:00+08:00">
+                2018-06-24
               </time>
             
 
@@ -289,19 +289,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/deeplearning/" itemprop="url" rel="index">
-                    <span itemprop="name">deeplearning</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/deeplearning/detection/" itemprop="url" rel="index">
-                    <span itemprop="name">detection</span>
+                  <a href="/categories/deep-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">deep learning</span>
                   </a>
                 </span>
 
@@ -318,8 +307,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/05/22/detection中训练细节/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/05/22/detection中训练细节/" itemprop="commentCount"></span>
+                <a href="/2018/06/24/DNN反向传播-BP算法推导/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/06/24/DNN反向传播-BP算法推导/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -347,21 +336,7 @@
       
 
       
-        <p>这段时间一直在做检测/分割相关方面的工作，之前参加了Kaggle上的Nuclei detection比赛，从别人的代码中学到很多东西。为了能够更进一步了解detection 中的细节，决定在Heng Cherkeng代码的基础上复现一下faster/mask rcnn上的结果，这里记录一下复现过程中发现的两者实现的不同之处，以及复现的过程中才了解到的模型训练中的一些细节。</p>
-<p>RPN 网络训练：</p>
-<ol>
-<li><p>给anchors设定标签时，首先是将和gt_goxes的IoU大于一定阈值（0.7）的设为fg，这种情况下仍然有很多的gt_boxes没有对应的anchors，为了给每一个gt_boxes都至少设定一个对应的anchors, 就从所有anchors中选出一个和其IoU最大的anchors作为fg。<br>在Heng 的代码中没有做这个工作。</p>
-</li>
-<li><p>我们知道，在给初始的anchors指定标签时，是根据anchors和gt_boxes之间的IoU值来指定的，这里的一个指的注意的地方是fg和bg的阈值之间需要有一个间隔（如fg：0.7，bg：0.3），这个间隔应该是很重要的，使得bg和fg之间的边界更加明显一些，有助于网络的收敛。<br>在Heng的代码中，训练Nuclei Detection的时候bg和fg的阈值都是0.5。</p>
-</li>
-<li><p>在RPN网络训练时也需要设定一张图片中anchors的batch_size和fg和bg的比例（1：1），这个设定有助于避免bg过多导致的ease sample现象，在实际中也发现，fg的数量和bg的实际数量比大概在1：10左右，尽管仍然很大，但如过不设置batch_size的话和比例的话，fg：bg的比例将达到1：20000（对于尺度在1024x1024的图像）。<br>Heng Nuclei Detection代码中，没有设置fb和bg的比例，起解决正负样本数量不均的的方法是通过给正负样本设置不同的权重，使得fg_num<em>fg_weight == bg_num </em> bg_weight。 另一个可以尝试的方法是通过使用focal loss去使得被错分的样例权重增加。</p>
-</li>
-<li><p>在通过网络之后，得到了所有anchors回归之后的结果，但是不能将其全部都用做后续RCNN的训练，对于RCNN来说，proposal区域应该尽量位于gt_boxes的附近。所以需要选择一部分“质量”比较好的proposal，而选择的依据就是根据RPN网络产生的logits通过NMS操作去选择，这里有两个比较重要的参数<code>TRAIN_RPN_PRE_NMS_TOP_N = 12000 TRAIN_RPN_POST_NMS_TOP_N = 2000</code>因为若直接将所有proposals都用在NMS中，会严重影响模型的效率，因此在进行NMS之前先选出logits最高的12000个anchors，在NMS操作后剩余的anchors中再选出2000个anchors。<br>Heng的代码中并没有采用这种方式，而是直接通过一个预先设置的阈值<code>rpn_train_nms_pre_score_threshold=0.7</code>去选择得分大于这个数值的anchors。</p>
-</li>
-<li><p>RPN在训练时回归网络时，通过<code>RPN_BBOX_STD_DEV = np.array([0.1, 0.1, 0.2, 0.2])</code>去将四个坐标的尺度去进行放大，目前不知道不使用放大对后续的训练有没有影响。<br>Heng 模型中没有进行这个处理。</p>
-</li>
-</ol>
-<p> RCNN训练：&lt;待续&gt;</p>
+        <p>&lt;待补充&gt;</p>
 
       
     </div>
@@ -379,9 +354,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/deeplearning/" rel="tag"># deeplearning</a>
-          
-            <a href="/tags/detection/" rel="tag"># detection</a>
+            <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
           
         </div>
       
@@ -394,14 +367,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/06/23/矩阵微分和常用符号规范/" rel="next" title="矩阵微分和常用符号规范">
+                <i class="fa fa-chevron-left"></i> 矩阵微分和常用符号规范
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/25/caffe2安装挖坑/" rel="prev" title="caffe2安装挖坑">
-                caffe2安装挖坑 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/06/25/DSB2018比赛总结/" rel="prev" title="DSB2018比赛总结">
+                DSB2018比赛总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -433,8 +410,8 @@
 
   
     <div class="comments" id="comments">
-      <div class="ds-thread" data-thread-key="2018/05/22/detection中训练细节/"
-           data-title="Faster/Mask R-CNN 复现心得和Nuclei detection中训练细节" data-url="http://yoursite.com/2018/05/22/detection中训练细节/">
+      <div class="ds-thread" data-thread-key="2018/06/24/DNN反向传播-BP算法推导/"
+           data-title="DNN反向传播 BP算法推导" data-url="http://yoursite.com/2018/06/24/DNN反向传播-BP算法推导/">
       </div>
     </div>
 

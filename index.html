@@ -233,6 +233,415 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/25/DSB2018比赛总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="dwLin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="linCurry' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/25/DSB2018比赛总结/" itemprop="url">DSB2018比赛总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-25T11:02:14+08:00">
+                2018-06-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">deep learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/25/DSB2018比赛总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/06/25/DSB2018比赛总结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="DSB2018比赛总结"><a href="#DSB2018比赛总结" class="headerlink" title="DSB2018比赛总结"></a>DSB2018比赛总结</h1><p>​    在两个月前参加kaggle和Booz Allen共同承办的DSB2018比赛，这也是我第一次参加这样的比赛，参赛的原因是因为之前正好看了一些目标检测的论文，想要在比赛上看看最新模型的效果。尽管最后的排名较为一般（第一阶段42/3600+，最终98/3600+），但是在比赛的过程中学习到了很多东西，不管是编程水平、对检测分割任务的理解都有了一定的提高，更重要的是心态上磨练，第一次参赛心态是比较差的，只愿意做能够快速实现然后取得效果的工作，功利心很强，导致后期比赛心态不是很好，这直接导致了第二阶段的成绩下滑严重。希望自己可以吸取教训，保持初心，做有意义有挑战的工作！</p>
+<p>​    拖了两个月，之前一直在忙着复现论文FPN，现在来总结以下排名靠前的队伍的解决方案。</p>
+<h2 id="1-排名靠前队伍的解决方案分享"><a href="#1-排名靠前队伍的解决方案分享" class="headerlink" title="1. 排名靠前队伍的解决方案分享"></a>1. 排名靠前队伍的解决方案分享</h2><h3 id="第一名队伍-ods-ai-topcoders-的方案总结-地址"><a href="#第一名队伍-ods-ai-topcoders-的方案总结-地址" class="headerlink" title="第一名队伍 ods.ai topcoders 的方案总结 地址"></a>第一名队伍 ods.ai topcoders 的方案总结 <a href="https://www.kaggle.com/c/data-science-bowl-2018/discussion/54741" target="_blank" rel="noopener">地址</a></h3><h4 id="主要的创新点："><a href="#主要的创新点：" class="headerlink" title="主要的创新点："></a>主要的创新点：</h4><ul>
+<li>将任务视为实例分割任务，在预测分割掩码的同时，预测两个细胞核<strong>接触的边界</strong>。</li>
+<li>损失函数: 同时使用交叉熵损失和<strong>soft dice loss</strong>，认为这么做可以解决分割任务中不同类别的pixel的不平衡问题。</li>
+<li>使用足够深的encoder-decoder架构，并且该架构在其他数据集(SpaceNet 和 Inria 等等)上也取得了不错的效果。</li>
+<li>使用了一些很特别的后处理技巧，包括watershed(用于分割任务的分水岭算法)、和morphological (形态变化)，并在二级模型上使用GBT算法。</li>
+<li>数据增强策略。</li>
+</ul>
+<h4 id="改进的过程"><a href="#改进的过程" class="headerlink" title="改进的过程"></a>改进的过程</h4><ol>
+<li>一开始采用了最简单的最简单的unet算法进行分割，对mask标注使用watershed方法进行处理，使得不同的nuclei之间有分割带（保证不同的nuclei之间有一定的间隔），这个方法初始时取得了~.500的分数。</li>
+<li>第二步中，尝试预测nuclei的轮廓，给标注的mask加上轮廓信息，轮廓的大小取决于nuclei的尺寸，标注了轮廓的mask加上watershed的后处理方案让分数提高到了~.525左右分数。</li>
+<li>作者发现对于边界清楚的nuclei, 掩码的轮廓可以预测的很清楚，但是对于边界相接壤的nuceli, 就需要做更多的工作去将其分开。于是作者决定只去预测nuclei的边界，这个改进+watershed的后处理方案使得LB分数到达~.550+左右</li>
+<li>现在有了一个通道预测完整mask，另一个通道负责预测border，但是即使是这样有时候的结果仍然不够好，一个更好的方法是改变nuclei mask的标注信息让边界部分的像素值为空。这使得我们可以使用softmax函数作为预测时的激活函数去替换sigmoid。这么做使得细胞核可以更好的分开，但是却降低了mAP, 原因是在IOU阈值较高时的得分不够高。作者解决的方法是另外使用完整mask 标注训练一个网络，然后将后处理时将两者的结合起来。<br>（这段话并不是很明白，1）不是已经有一个通道使用完整的mask标注来训练了么？2）为什么让了nuclei的边界像素值为空就能够使用softmax函数作为激活函数了？</li>
+</ol>
+<blockquote>
+<p>数据增强策略</p>
+<ul>
+<li>Clahe, Sharpen, Emboss</li>
+<li>Gaussian Noise</li>
+<li>Color to Gray</li>
+<li>Inverting - we should not have used it, some images were not predicted correctly on stage2 because of this augmentation</li>
+<li><strong>Remapping grayscale images to random color images</strong></li>
+<li>Blur, Median Blur, Motion Blur</li>
+<li>contrast and brightness</li>
+<li>random scale, rotates and flips</li>
+<li>Heavy geometric transformations: Elastic Transform, Perspective Transform, Piecewise Affine transforms, pincushion distortion</li>
+<li>Random HSV</li>
+<li><strong>Channel shuffle</strong> - I guess this one was very important due to the nature of the data</li>
+<li><strong>Nucleus copying on images</strong>. That created a lot of overlapping nuclei. It seemed to help networks to learn better borders for overlapping nuclei.</li>
+</ul>
+</blockquote>
+<h4 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h4><p>​    基本架构使用的UNet模型，作者发现VGG16在这个这个任务上的效果并不是很好，决定让网络朝着更深的方向发展。实验之后作者发现效果比较好的几个网络分别是：<strong>DPN-92, Resnet-152， InceptionResnetV2, Resnet101</strong></p>
+<h4 id="二级模型-后处理"><a href="#二级模型-后处理" class="headerlink" title="二级模型/后处理"></a>二级模型/后处理</h4><p>​    使用<strong>LightGBM</strong>模型来判断预测出的nuclei是否为真的nuclei，该模型为一个回归模型，具体预测值为该nuclei和grond truth的IOU值，之后根据预测的IOU值选出一个合适的阈值将阈值低的nuclei排除。而输入的特征主要选用了一些形态学上的特征，包括 solidity, circularity, convexity, area, neighbors median area, count。（真的强！）</p>
+<h4 id="额外说明"><a href="#额外说明" class="headerlink" title="额外说明"></a>额外说明</h4><p>watershed postprocesing：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">def label_mask(mask_img, border_img, seed_ths, threshold, seed_size=8, obj_size=10):</span><br><span class="line">    img_copy = np.copy(mask_img)</span><br><span class="line">    m = img_copy * (1 - border_img)</span><br><span class="line">    img_copy[m &lt;= seed_ths] = 0</span><br><span class="line">    img_copy[m &gt; seed_ths] = 1</span><br><span class="line">    img_copy = img_copy.astype(np.bool)</span><br><span class="line">    img_copy = remove_small_objects(img_copy, seed_size).astype(np.uint8)</span><br><span class="line">    mask_img[mask_img &lt;= threshold] = 0</span><br><span class="line">    mask_img[mask_img &gt; threshold] = 1</span><br><span class="line">    mask_img = mask_img.astype(np.bool)</span><br><span class="line">    mask_img = remove_small_objects(mask_img, obj_size).astype(np.uint8)</span><br><span class="line">    markers = ndimage.label(img_copy, output=np.uint32)[0]</span><br><span class="line">    labels = watershed(mask_img, markers, mask=mask_img, watershed_line=True)</span><br><span class="line">    return labels</span><br></pre></td></tr></table></figure>
+<h3 id="第三名队伍-Deep-Retina-方案总结-地址"><a href="#第三名队伍-Deep-Retina-方案总结-地址" class="headerlink" title="第三名队伍 Deep Retina 方案总结 地址"></a>第三名队伍 Deep Retina 方案总结 <a href="https://www.kaggle.com/c/data-science-bowl-2018/discussion/56326" target="_blank" rel="noopener">地址</a></h3><h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>1） 原话是<strong>Strong scaling augmentation</strong>， 主要是的数据增强方案是大量的缩放和长宽比例变化。然后使用截取出512x512尺度的图片进行训练。</p>
+<p>2) <strong>Test time augmentation方案</strong>， 主要有两种，一种包括各种各样的旋转、尺度变化、色彩通道切换。另一种使用binary dilation 对结果进行后处理（主要是腐蚀、扩张？）</p>
+<h3 id="第五名队伍-Inom-Mirzaev-方案总结-地址"><a href="#第五名队伍-Inom-Mirzaev-方案总结-地址" class="headerlink" title="第五名队伍 Inom Mirzaev 方案总结 地址"></a>第五名队伍 Inom Mirzaev 方案总结 <a href="https://www.kaggle.com/c/data-science-bowl-2018/discussion/56326" target="_blank" rel="noopener">地址</a></h3><p>​    采用  <a href="https://github.com/matterport/Mask_RCNN" target="_blank" rel="noopener">Matterport’s</a> 的Mask R-CNN模型，使用额外的数据集 <a href="https://www.kaggle.com/voglinio/external-h-e-data-with-mask-annotations" target="_blank" rel="noopener">external dataset</a> 并加上大量的数据增强方案。除此之外，还通过对原始数据集的拼接去产生的新的数据，基本方案为 <a href="https://www.kaggle.com/bonlime/train-test-image-mosaic" target="_blank" rel="noopener">this notebook</a>。为了防止过拟合，将原始数据集分为训练集和验证集（基于<a href="https://www.kaggle.com/c/data-science-bowl-2018/discussion/48130" target="_blank" rel="noopener">Allen Goodman</a> 对训练图像的所分的五个类别。在使用ResNet101作为网络主架构后，通过TTA和对mask的后处理提高精确度</p>
+<blockquote>
+<p>以下为作者的说明，给值得注意的地方加粗。</p>
+<h4 id="Training-Method-s"><a href="#Training-Method-s" class="headerlink" title="Training Method(s)"></a>Training Method(s)</h4><h5 id="Pre-processing"><a href="#Pre-processing" class="headerlink" title="Pre-processing"></a>Pre-processing</h5><ul>
+<li>I noticed some issues with the provided masks. Therefore, used the annotations and mask provided by <a href="https://github.com/lopuhin/kaggle-dsbowl-2018-dataset-fixes" target="_blank" rel="noopener">Konstantin Lopuhin</a> in <a href="https://www.kaggle.com/c/data-science-bowl-2018/discussion/47572" target="_blank" rel="noopener">data quality issues</a> thread.</li>
+<li>Removed the alpha channel from the images.</li>
+<li>Filled holes in the masks</li>
+<li>Splitted (using stratification) the <code>stage1_train</code> dataset into 90% train and 10% validation sets based on 5 image modalities provided by <a href="https://www.kaggle.com/c/data-science-bowl-2018/discussion/48130" target="_blank" rel="noopener">Allen Goodman</a>.</li>
+<li>Used an <a href="https://www.kaggle.com/voglinio/external-h-e-data-with-mask-annotations" target="_blank" rel="noopener">external dataset</a> provided in the forum. Divided the images and the masks into 4 pieces due their large sizes. External dataset <a href="https://nucleisegmentationbenchmark.weebly.com/dataset.html" target="_blank" rel="noopener">download links</a>.</li>
+<li>Generated mosaics from train images based on <a href="https://www.kaggle.com/bonlime/train-test-image-mosaic" target="_blank" rel="noopener">Emil’s</a> notebook.</li>
+</ul>
+<h5 id="Model-and-Training"><a href="#Model-and-Training" class="headerlink" title="Model and Training"></a>Model and Training</h5><ul>
+<li>Modified <a href="https://github.com/matterport/Mask_RCNN" target="_blank" rel="noopener">Matterport’s</a> implementation of <a href="https://arxiv.org/abs/1703.06870" target="_blank" rel="noopener">Mask-RCNN</a> deep neural network for object instance segmentation.</li>
+<li>Tuned hyperparameters to detect small nuclei from the images. (I found <a href="https://engineering.matterport.com/splash-of-color-instance-segmentation-with-mask-r-cnn-and-tensorflow-7c761e238b46" target="_blank" rel="noopener">this tutorial</a> very useful for understanding the model hyperparameters) <ul>
+<li>Original Matterport implementation was validating only on one image so fixed this <a href="https://github.com/matterport/Mask_RCNN/issues/89" target="_blank" rel="noopener">validation issue</a>.</li>
+<li>Reduced RPN (region proposal network) anchor sizes since the nuclei are mostly small.</li>
+<li>Increased number of anchors to be used since the nuclei are small and can be found anywhere on an image.</li>
+<li>Increased maximum number of predicted objects since an image can contain 300 or more nuclei.</li>
+<li>Increased <code>POST_NMS_ROIS_TRAINING</code> to get more region proposals during training.</li>
+<li>Added extra parameter <code>DETECTION_MASK_THRESHOLD</code> to model configuration. Default was hardcoded in the model as 0.5 but setting it to 0.35 helped in detection of small nuclei boundaries.</li>
+<li>Resized images and masks to 512x512</li>
+</ul>
+</li>
+<li>Relied heavily on image augmentation due to small training set: <ul>
+<li>Random horizontal or vertical flips</li>
+<li>Random 90 or -90 degrees rotation</li>
+<li><a href="https://www.kaggle.com/c/data-science-bowl-2018/discussion/49692" target="_blank" rel="noopener">Random rotations</a> in the range of (-15, 15) degrees</li>
+<li><a href="https://www.kaggle.com/c/data-science-bowl-2018/discussion/49692" target="_blank" rel="noopener">Random cropping</a> of bigger images and masks to 256x256x3.</li>
+<li><a href="https://www.kaggle.com/c/data-science-bowl-2018/discussion/49692" target="_blank" rel="noopener">Random scaling</a> of image and mask scaling in the range (0.5, 2.0)</li>
+</ul>
+</li>
+<li>Used Resnet101 architecture as a backbone encoder but initialized the first 50 layers of the model with pre-trained Resnet50 weights from <a href="https://github.com/fchollet/deep-learning-models/releases/" target="_blank" rel="noopener">ImageNet competition</a>.</li>
+<li>Trained the model with <a href="https://arxiv.org/abs/1412.6980" target="_blank" rel="noopener">Adam</a> optimizer for 75 epochs:<ul>
+<li>25 epochs with learning rate 1e-4</li>
+<li>25 epochs with learning rate 1e-5</li>
+<li>25 epochs with learning rate 1e-6</li>
+</ul>
+</li>
+<li>Did not retrain the model with stage1 test data during stage 2 as I was afraid of overfitting on black and white images.</li>
+</ul>
+<h6 id="Post-processing"><a href="#Post-processing" class="headerlink" title="Post-processing"></a>Post-processing</h6><ul>
+<li><strong>Combined predictions on actual image and horizontally flipped image: took unions of masks with maximum overlap and removed false positive masks with small overlap.</strong></li>
+<li><strong>Due to configured RPN anchor sizes, the model predicts small nuclei very well. However, it struggles at predicting large nuclei. Therefore, if a model predicts no masks for an image then I scale down the image and predict once again.</strong> （我也这么做了- -）</li>
+<li><p><strong>Removed overlaps between predicted nuclei based on their objectness score. In other words, removed intersections from the masks with lower scores.</strong></p>
+<ul>
+<li><strong>If this intersection removal results in multiple objects in that mask, then removing all the small pieces.</strong>（如果多个object之间有mask重合的部分，则将这部分mask从得分不是最高的object上删去</li>
+</ul>
+</li>
+<li><p>Closing small holes inside the masks using morphological operations (dilation followed by erosion).</p>
+</li>
+</ul>
+<h5 id="Interesting-findings"><a href="#Interesting-findings" class="headerlink" title="Interesting findings"></a>Interesting findings</h5><ul>
+<li><strong>Mask-RCNN model overfits easily without image augmentation.</strong></li>
+<li><strong>Removing false positive mask predictions improves the overall score significantly.</strong></li>
+<li>Since images are on different scales, predicting masks on scaled images helps with the model generalizability.</li>
+<li>Dilating and then eroding individual masks helped me achieve <strong>slightly better</strong> result.</li>
+<li>Matterport’s original implementation was only <a href="https://github.com/matterport/Mask_RCNN/issues/89" target="_blank" rel="noopener">validating on only one image</a>. Fixing this issue made the training process reproducible.</li>
+<li>I found that the model reaches a local minima faster when trained using Adam optimizer compared to default SGD optimizer.</li>
+</ul>
+<h5 id="Unsuccessful-approaches-tried"><a href="#Unsuccessful-approaches-tried" class="headerlink" title="Unsuccessful approaches tried"></a>Unsuccessful approaches tried</h5><ul>
+<li>Trained the model with Dice Coefficient Loss instead of default binary cross-entropy loss for the masks heads. Although got comparable results couldn’t beat prediction accuracy of binary cross-entropy on my validation set.</li>
+<li>Trained with random Gaussian and Poisson (or shot) noise for image augmentation. It actually hurt overall model performance.</li>
+<li>Tried ensembling actual image predictions with horizontal and vertical flip predictions. Used non-maximum suppression for removing overlaps. Did not improve prediction accuracy on the validation set.</li>
+<li>Trained end-to-end without initializing with pre-trained ImageNet weights. Mostly got to Mean IoU score of 0.35 on stage1 test set.</li>
+<li>Trained on preprocessed images with adaptive histogram equalization (CLAHE). The model performed way worse.</li>
+</ul>
+</blockquote>
+<p>&lt;待续&gt;</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/24/DNN反向传播-BP算法推导/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="dwLin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="linCurry' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/24/DNN反向传播-BP算法推导/" itemprop="url">DNN反向传播 BP算法推导</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-24T10:41:00+08:00">
+                2018-06-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">deep learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/24/DNN反向传播-BP算法推导/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/06/24/DNN反向传播-BP算法推导/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>&lt;待补充&gt;</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/23/矩阵微分和常用符号规范/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -768,7 +1177,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -779,7 +1188,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -790,7 +1199,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
